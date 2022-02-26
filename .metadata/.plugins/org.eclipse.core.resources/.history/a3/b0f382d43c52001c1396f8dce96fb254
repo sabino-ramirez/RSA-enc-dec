@@ -1,0 +1,44 @@
+package project2;
+
+import java.util.Random;
+
+public class RSAGenKey {
+
+	//generates prime numbers p and q
+	public static int genPrime() {
+		int i, j, num, c, r, r1;
+		int size = 1000;
+		int index = 0;
+		
+		Random rand = new Random();
+		int randArray [] = new int[size];
+		r1 = rand.nextInt(2000);
+		for (i = 100; i < r1; i++) {
+			num = i;
+			c = 0;
+			
+			for (j = 2; j <= num/2; j++) {
+				if (num % j == 0) {
+					c++;
+				}
+			}
+			
+			if (c == 0) {
+				randArray[index++] = num;
+			}
+		}
+		
+		r = rand.nextInt(index);
+		return randArray[r];
+	}
+	
+	public static long gcd(long a, long b) {
+			
+	return 0;
+	}
+	
+	
+	public static void main(String[] args) {
+	}
+
+}

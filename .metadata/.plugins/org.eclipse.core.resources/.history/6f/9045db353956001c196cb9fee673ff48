@@ -1,0 +1,12 @@
+package project2;
+
+import java.math.BigInteger;
+
+public class misc {
+
+	BigInteger x = 02;
+	BigInteger e = 1438807;
+	BigInteger n = 5679743;
+	
+	BigInteger y = Math.pow((double)x, e);
+}

@@ -1,0 +1,7 @@
+package project2;
+
+public class misc {
+
+	BigInteger x = 02;
+	BigInteger e = 1438807;
+}

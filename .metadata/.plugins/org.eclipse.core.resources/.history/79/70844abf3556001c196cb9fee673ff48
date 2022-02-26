@@ -1,0 +1,112 @@
+package project2;
+
+import java.math.BigInteger;
+//import java.util.Random;
+import java.io.*;
+import java.util.*;
+//import java.sql.*;
+
+public class RSAGenKey {
+	int sizeOfPrime;
+	BigInteger p, q, n, r, e, d;
+	
+	//constructor to take the size of key
+	public RSAGenKey(int sizeOfPrime) {
+		this.sizeOfPrime = sizeOfPrime;
+		makePrimes();
+		
+		makeKeys();
+	}
+	
+	//constructor to take in p, q, and e as input
+	public RSAGenKey(BigInteger p, BigInteger q, BigInteger e) {
+		this. p = p; 
+		this. q = q;
+		this. e = e;
+
+		n = p.multiply(q); // r = p * q
+		r = p.subtract(BigInteger.valueOf(1)); //r = (p-1)
+		r = r.multiply(q.subtract(BigInteger.valueOf(1))); //(p-1)(q-1)
+		
+		d = e.modInverse(r);
+	}
+	
+	public RSAGenKey() {
+		
+	}
+	
+
+	//makes p and q based off sizeOfPrime input 
+	public void makePrimes() {
+
+		p = new BigInteger(sizeOfPrime, 10, new Random());
+
+		do {
+			q = new BigInteger(sizeOfPrime, 10, new Random());
+		} while (q.compareTo(p) == 0);
+	}
+	
+	//makes the public and private keys based off p and q
+	public void makeKeys() {
+		n = p.multiply(q); // r = p * q
+		r = p.subtract(BigInteger.valueOf(1)); //r = (p-1)
+		r = r.multiply(q.subtract(BigInteger.valueOf(1))); //(p-1)(q-1)
+		
+		do {
+			e = new BigInteger(2 * sizeOfPrime, new Random());
+		} while ((e.compareTo(r) != -1) || (e.gcd(r).compareTo(BigInteger.valueOf(1)) != 0));
+		
+		d = e.modInverse(r);
+	}
+	
+	//getters for elements 
+	public BigInteger getP() {
+		return (p);
+	}
+//
+	public BigInteger getQ() {
+		return (q);
+	}
+//	
+//	public BigInteger getR() {
+//		return (r);
+//	}
+
+	public BigInteger getN() {
+		return n;
+	}
+
+	public BigInteger getE() {
+		return (e);
+	}
+
+	public BigInteger getD() {
+		return (d);
+	}
+	
+	public static void main(String[] args) throws IOException {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Enter the Key Size, or provide p, q, and e.");
+		int keySize = input.nextInt();
+		
+		RSAGenKey gk = new RSAGenKey(keySize);
+		String pubKey = gk.getE().toString();
+		String privKey = gk.getD().toString();
+		String randNum = gk.getN().toString();
+		String p = gk.getP().toString();
+		String q = gk.getQ().toString();
+		
+		FileWriter fwpub = new FileWriter("pub_key.txt");
+		FileWriter fwpri = new FileWriter("pri_key.txt");
+		System.out.println("(e, n): " + pubKey + ", " +  randNum);
+		System.out.println("(d, n): " + privKey + ", " +  randNum);
+		
+		fwpub.write("e = " + pubKey + "\n" + "n = " + randNum +  "\n");
+		fwpri.write("d = " + privKey + "\n" + "n = " + randNum +  "\n");
+		
+		fwpub.close();
+		fwpri.close();
+	}
+}
+
+

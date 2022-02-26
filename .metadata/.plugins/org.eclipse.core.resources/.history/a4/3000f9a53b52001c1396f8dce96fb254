@@ -1,0 +1,15 @@
+package project2;
+
+public class RSAGenKey {
+
+	public static int genPrime() {
+		int i, j, num, c, r, r1;
+		int size = 1000;
+		int index = 0;
+		return 0;
+	}
+	public static void main(String[] args) {
+		
+	}
+
+}
